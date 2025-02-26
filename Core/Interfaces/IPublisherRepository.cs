@@ -1,6 +1,6 @@
 ﻿using Core.Entities;
 
-namespace Core.Repositories
+namespace Core.Interfaces
 {
     public interface IPublisherRepository : IRepository<Publisher>
     {

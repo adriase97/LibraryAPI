@@ -1,6 +1,6 @@
 ﻿using Core.DTOs;
 using Core.Exceptions;
-using Core.Repositories;
+using Core.Interfaces;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 

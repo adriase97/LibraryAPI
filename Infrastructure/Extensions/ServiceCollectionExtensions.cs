@@ -1,4 +1,4 @@
-﻿using Core.Repositories;
+﻿using Core.Interfaces;
 using Core.Services;
 using Infrastructure.Mappings;
 using Infrastructure.Persistence;

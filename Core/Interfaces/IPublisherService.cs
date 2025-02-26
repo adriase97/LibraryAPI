@@ -1,6 +1,6 @@
 ﻿using Core.DTOs;
 
-namespace Core.Repositories
+namespace Core.Interfaces
 {
     public interface IPublisherService
     {

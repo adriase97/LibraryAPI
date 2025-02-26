@@ -1,7 +1,7 @@
 ﻿using Core.DTOs;
 using Core.Enums;
 
-namespace Core.Repositories
+namespace Core.Interfaces
 {
     public interface IBookService
     {

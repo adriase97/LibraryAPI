@@ -3,7 +3,7 @@ using Core.DTOs;
 using Core.Entities;
 using Core.Enums;
 using Core.Exceptions;
-using Core.Repositories;
+using Core.Interfaces;
 using Core.Specifications;
 
 namespace Core.Services
