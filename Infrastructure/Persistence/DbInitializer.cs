@@ -18,7 +18,7 @@ namespace Infrastructure.Persistence
             #region Users
             foreach (Role role in Enum.GetValues(typeof(Role)))
             {
-                var user = new IdentityUser { UserName = role.ToString() };
+                var user = new IdentityUser { UserName = role.ToString(), Email = $"{role.ToString()}@library.com" };
                 var result = await userManager.CreateAsync(user, $"{role.ToString()}@123");
                 if (result.Succeeded) await userManager.AddToRoleAsync(user, role.ToString());
             }

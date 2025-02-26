@@ -1,5 +1,4 @@
 ﻿using Core.DTOs;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,32 +12,27 @@ namespace API.Controllers
     {
         #region Fields
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly ILogger<AccountController> _logger;
         #endregion
 
         #region Constructor
-        public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ILogger<AccountController> logger)
+        public AccountController(UserManager<IdentityUser> userManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
         }
         #endregion
 
         #region Get
         [HttpGet("All")]
-        [Authorize(Roles = "Admin")]
         public IActionResult GetAllUsers()
         {
-            var users = _userManager.Users.Select(u => new { u.Id, u.Email }).ToList();
+            var users = _userManager.Users.ToList();
             return Ok(new { message = "ok", response = users });
         }
 
         [HttpGet("Profile")]
         public async Task<IActionResult> GetProfileAsync()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity?.Name);
             if (user == null)
                 return NotFound("User not found");
 
@@ -52,7 +46,7 @@ namespace API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var user = new IdentityUser { UserName = registerUserDto.Email, Email = registerUserDto.Email };
+            var user = new IdentityUser { UserName = registerUserDto.UserName, Email = registerUserDto.Email };
             var result = await _userManager.CreateAsync(user, registerUserDto.Password);
 
             if (!result.Succeeded)
@@ -79,7 +73,7 @@ namespace API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity?.Name);
             if (user == null)
                 return NotFound("User not found");
 
@@ -97,7 +91,7 @@ namespace API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity?.Name);
             if (user == null) return NotFound("User not found");
 
             var result = await _userManager.ChangePasswordAsync(user, changePasswordUserDto.CurrentPassword, changePasswordUserDto.NewPassword);
