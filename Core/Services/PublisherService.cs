@@ -78,21 +78,7 @@ namespace Core.Services
         {
             if (publisherDTO == null) throw new PublisherException("Cannot add a null publisher.");
             var publisher = _mapper.Map<Publisher>(publisherDTO);
-
-            await _bookPublisherRepository.DeleteByBookOrPublisherAsync(publisherId: publisher.Id);
             await _publisherRepository.UpdateAsync(publisher);
-
-            if (publisherDTO.BookPublishers != null && publisherDTO.BookPublishers.Any())
-            {
-                var newRelations = publisherDTO.BookPublishers.Select(bp => new BookPublisher
-                {
-                    BookId = bp.BookId,
-                    PublisherId = publisher.Id,
-                    PublishedDate = bp.PublishedDate
-                });
-
-                await _bookPublisherRepository.AddRangeAsync(newRelations);
-            }
         }
 
         public async Task DeleteAsync(int id)
