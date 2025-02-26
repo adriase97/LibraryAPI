@@ -118,6 +118,8 @@ namespace API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+
                 await _publisherService.AddAsync(publisherDTO);
                 return Ok(new { message = "ok" });
             }
@@ -138,6 +140,8 @@ namespace API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+
                 await _publisherService.UpdateAsync(publisherDTO);
                 return Ok(new { message = "ok" });
             }
@@ -153,7 +157,7 @@ namespace API.Controllers
         #endregion
 
         #region Delete
-        [HttpDelete("Delete")]
+        [HttpDelete("Delete/{id:int}")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             try

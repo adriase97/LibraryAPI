@@ -1,8 +1,6 @@
 ﻿using Core.DTOs;
-using Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,7 +27,7 @@ namespace API.Controllers
         #endregion
 
         #region Get
-        [HttpGet("all-users")]
+        [HttpGet("All")]
         [Authorize(Roles = "Admin")]
         public IActionResult GetAllUsers()
         {
@@ -66,6 +64,8 @@ namespace API.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync([FromBody] LoginUserDto loginUserDto)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
             var user = await _userManager.FindByEmailAsync(loginUserDto.Email);
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginUserDto.Password)) return Unauthorized("Invalid login attempt.");
 
@@ -77,6 +77,8 @@ namespace API.Controllers
         [HttpPut("Update")]
         public async Task<IActionResult> UpdateProfileAsync([FromBody] UserDto userDto)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             if (user == null)
                 return NotFound("User not found");
@@ -93,6 +95,8 @@ namespace API.Controllers
         [HttpPut("ChangePassword")]
         public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordUserDto changePasswordUserDto)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
             if (user == null) return NotFound("User not found");
 
@@ -104,7 +108,7 @@ namespace API.Controllers
         #endregion
 
         #region Delete
-        [HttpDelete("Delete")]
+        [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
             var user = await _userManager.FindByIdAsync(id);
@@ -116,6 +120,6 @@ namespace API.Controllers
             return Ok(new { message = "ok" });
         }
         #endregion
-        
+
     }
 }

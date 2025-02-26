@@ -60,6 +60,8 @@ namespace API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+
                 await _bookPublisherService.AddAsync(bookPublisherDTO);
                 return Ok(new { message = "ok" });
             }
@@ -78,6 +80,8 @@ namespace API.Controllers
         {
             try
             {
+                if (!ModelState.IsValid) return BadRequest(ModelState);
+
                 await _bookPublisherService.AddRangeAsync(bookPublisherDTOs);
                 return Ok(new { message = "ok" });
             }
