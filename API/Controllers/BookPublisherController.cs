@@ -1,11 +1,13 @@
 ﻿using Core.DTOs;
 using Core.Exceptions;
 using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     [EnableCors("CorsPolicy")]
     [Route("libraryApi/[controller]")]
     [ApiController]
@@ -25,6 +27,8 @@ namespace API.Controllers
         {
             try
             {
+                if (User.HasClaim("BooksAccess", "false") || User.HasClaim("PublishersAccess", "false")) return Forbid();
+
                 var bookPublishers = await _bookPublisherService.GetAllAsync();
                 return Ok(new { message = "ok", response = bookPublishers });
             }
@@ -39,6 +43,8 @@ namespace API.Controllers
         {
             try
             {
+                if (User.HasClaim("BooksAccess", "false") || User.HasClaim("PublishersAccess", "false")) return Forbid();
+
                 var bookPublisher = await _bookPublisherService.GetByIdAsync(bookId, publisherId);
                 return Ok(new { message = "ok", response = bookPublisher });
             }
@@ -54,11 +60,15 @@ namespace API.Controllers
         #endregion
 
         #region Post
+        [Authorize(Roles = "Admin, AuthorsBooksPublisher, AuthorsBooks, Publisher")]
         [HttpPost("Add")]
         public async Task<IActionResult> AddAsync([FromBody] BookPublisherDTO bookPublisherDTO)
         {
             try
             {
+                if (User.HasClaim("BooksCreate", "false") || User.HasClaim("BooksEdit", "false") ||
+                    User.HasClaim("PublishersCreate", "false") || User.HasClaim("PublishersEdit", "false")) return Forbid();
+
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
                 await _bookPublisherService.AddAsync(bookPublisherDTO);
@@ -74,11 +84,15 @@ namespace API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, AuthorsBooksPublisher, AuthorsBooks, Publisher")]
         [HttpPost("AddRange")]
         public async Task<IActionResult> AddRangeAsync([FromBody] IEnumerable<BookPublisherDTO> bookPublisherDTOs)
         {
             try
             {
+                if (User.HasClaim("BooksCreate", "false") || User.HasClaim("BooksEdit", "false") ||
+                    User.HasClaim("PublishersCreate", "false") || User.HasClaim("PublishersEdit", "false")) return Forbid();
+
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
                 await _bookPublisherService.AddRangeAsync(bookPublisherDTOs);
@@ -96,11 +110,14 @@ namespace API.Controllers
         #endregion
 
         #region Delete
+        [Authorize(Roles = "Admin, AuthorsBooksPublisher, AuthorsBooks, Publisher")]
         [HttpDelete("Delete/{bookId:int}/{publisherId:int}")]
         public async Task<IActionResult> DeleteAsync(int bookId, int publisherId)
         {
             try
             {
+                if (User.HasClaim("BooksEdit", "false") || User.HasClaim("PublishersEdit", "false")) return Forbid();
+
                 await _bookPublisherService.DeleteAsync(bookId, publisherId);
                 return Ok(new { message = "ok" });
             }
@@ -114,11 +131,14 @@ namespace API.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin, AuthorsBooksPublisher, AuthorsBooks, Publisher")]
         [HttpDelete("DeleteByBookOrPublisher")]
         public async Task<IActionResult> DeleteByBookOrPublisherAsync(int? bookId = null, int? publisherId = null)
         {
             try
             {
+                if (User.HasClaim("BooksEdit", "false") || User.HasClaim("PublishersEdit", "false")) return Forbid();
+
                 await _bookPublisherService.DeleteByBookOrPublisherAsync(bookId, publisherId);
                 return Ok(new { message = "ok" });
             }

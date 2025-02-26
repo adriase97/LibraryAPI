@@ -7,6 +7,7 @@ using System.Security.Claims;
 
 namespace API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [EnableCors("CorsPolicy")]
     [Route("libraryApi/[controller]")]
     [ApiController]

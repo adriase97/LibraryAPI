@@ -10,15 +10,20 @@ namespace Core.Services
 {
     public class TokenService : ITokenService
     {
+        #region Fields
         private readonly IConfiguration _configuration;
         private readonly UserManager<IdentityUser> _userManager;
+        #endregion
 
+        #region Constructor
         public TokenService(IConfiguration configuration, UserManager<IdentityUser> userManager)
         {
             _configuration = configuration;
             _userManager = userManager;
         }
+        #endregion
 
+        #region Public Methods
         public async Task<string> GenerateTokenAsync(IdentityUser user)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
@@ -65,5 +70,6 @@ namespace Core.Services
 
             return tokenHandler.WriteToken(token);
         }
+        #endregion
     }
 }

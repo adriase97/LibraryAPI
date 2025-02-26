@@ -1,10 +1,13 @@
 ﻿using Core.DTOs;
+using Core.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [Authorize]
     [EnableCors("CorsPolicy")]
     [Route("libraryApi/[controller]")]
     [ApiController]
@@ -12,16 +15,19 @@ namespace API.Controllers
     {
         #region Fields
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ITokenService _tokenService;
         #endregion
 
         #region Constructor
-        public AccountController(UserManager<IdentityUser> userManager)
+        public AccountController(UserManager<IdentityUser> userManager, ITokenService tokenService)
         {
             _userManager = userManager;
+            _tokenService = tokenService;
         }
         #endregion
 
         #region Get
+        [Authorize(Roles = "Admin")]
         [HttpGet("All")]
         public IActionResult GetAllUsers()
         {
@@ -41,6 +47,7 @@ namespace API.Controllers
         #endregion
 
         #region Post
+        [AllowAnonymous]
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterUserDto registerUserDto)
         {
@@ -55,6 +62,7 @@ namespace API.Controllers
             return Ok(new { message = "ok" });
         }
 
+        [AllowAnonymous]
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync([FromBody] LoginUserDto loginUserDto)
         {
@@ -63,7 +71,9 @@ namespace API.Controllers
             var user = await _userManager.FindByEmailAsync(loginUserDto.Email);
             if (user == null || !await _userManager.CheckPasswordAsync(user, loginUserDto.Password)) return Unauthorized("Invalid login attempt.");
 
-            return Ok(new { message = "ok" });
+            var token = await _tokenService.GenerateTokenAsync(user);
+
+            return Ok(new { message = "ok", response = token });
         }
         #endregion
 
@@ -102,6 +112,7 @@ namespace API.Controllers
         #endregion
 
         #region Delete
+        [Authorize(Roles = "Admin")]
         [HttpDelete("Delete/{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
