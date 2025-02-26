@@ -1,4 +1,5 @@
 ﻿using Core.DTOs;
+using Core.Enums;
 using Core.Exceptions;
 using Core.Repositories;
 using Microsoft.AspNetCore.Cors;
@@ -9,14 +10,14 @@ namespace API.Controllers
     [EnableCors("CorsPolicy")]
     [Route("libraryApi/[controller]")]
     [ApiController]
-    public class AuthorController : ControllerBase
+    public class BookController : Controller
     {
         #region Fields
-        private readonly IAuthorService _authorService;
+        private readonly IBookService _bookService;
         #endregion
 
         #region Constructor
-        public AuthorController(IAuthorService authorService) => this._authorService = authorService;
+        public BookController(IBookService bookService) => this._bookService = bookService;
         #endregion
 
         #region Get
@@ -25,8 +26,8 @@ namespace API.Controllers
         {
             try
             {
-                var authors = await _authorService.GetAllAsync();
-                return Ok(new { message = "ok", response = authors });
+                var books = await _bookService.GetAllAsync();
+                return Ok(new { message = "ok", response = books });
             }
             catch (Exception ex)
             {
@@ -39,8 +40,8 @@ namespace API.Controllers
         {
             try
             {
-                var authors = await _authorService.GetAllWithIncludesAsync();
-                return Ok(new { message = "ok", response = authors });
+                var books = await _bookService.GetAllWithIncludesAsync();
+                return Ok(new { message = "ok", response = books });
             }
             catch (Exception ex)
             {
@@ -49,12 +50,12 @@ namespace API.Controllers
         }
 
         [HttpGet("Specification")]
-        public async Task<IActionResult> GetBySpecificationAsync(string? name)
+        public async Task<IActionResult> GetBySpecificationAsync(string? title, Genre? genre, decimal? minPrice, decimal? maxPrice)
         {
             try
             {
-                var authors = await _authorService.GetBySpecificationAsync(name);
-                return Ok(new { message = "ok", response = authors });
+                var books = await _bookService.GetBySpecificationAsync(title, genre, minPrice, maxPrice);
+                return Ok(new { message = "ok", response = books });
             }
             catch (Exception ex)
             {
@@ -63,12 +64,12 @@ namespace API.Controllers
         }
 
         [HttpGet("SpecificationWithIncludes")]
-        public async Task<IActionResult> GetBySpecificationWithIncludesAsync(string? name)
+        public async Task<IActionResult> GetBySpecificationWithIncludesAsync(string? title, Genre? genre, decimal? minPrice, decimal? maxPrice)
         {
             try
             {
-                var authors = await _authorService.GetBySpecificationWithIncludesAsync(name);
-                return Ok(new { message = "ok", response = authors });
+                var books = await _bookService.GetBySpecificationWithIncludesAsync(title, genre, minPrice, maxPrice);
+                return Ok(new { message = "ok", response = books });
             }
             catch (Exception ex)
             {
@@ -81,10 +82,10 @@ namespace API.Controllers
         {
             try
             {
-                var author = await _authorService.GetByIdAsync(id);
-                return Ok(new { message = "ok", response = author });
+                var book = await _bookService.GetByIdAsync(id);
+                return Ok(new { message = "ok", response = book });
             }
-            catch (AuthorException ex)
+            catch (BookException ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
@@ -99,10 +100,10 @@ namespace API.Controllers
         {
             try
             {
-                var author = await _authorService.GetByIdWithIncludesAsync(id);
-                return Ok(new { message = "ok", response = author });
+                var book = await _bookService.GetByIdWithIncludesAsync(id);
+                return Ok(new { message = "ok", response = book });
             }
-            catch (AuthorException ex)
+            catch (BookException ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
@@ -115,14 +116,14 @@ namespace API.Controllers
 
         #region Post
         [HttpPost("Add")]
-        public async Task<IActionResult> AddAsync([FromBody] AuthorDTO authorDTO)
+        public async Task<IActionResult> AddAsync([FromBody] BookDTO bookDTO)
         {
             try
             {
-                await _authorService.AddAsync(authorDTO);
+                await _bookService.AddAsync(bookDTO);
                 return Ok(new { message = "ok" });
             }
-            catch (AuthorException ex)
+            catch (BookException ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
@@ -135,14 +136,14 @@ namespace API.Controllers
 
         #region Put
         [HttpPut("Update")]
-        public async Task<IActionResult> UpdateAsync([FromBody] AuthorDTO authorDTO)
+        public async Task<IActionResult> UpdateAsync([FromBody] BookDTO bookDTO)
         {
             try
             {
-                await _authorService.UpdateAsync(authorDTO);
+                await _bookService.UpdateAsync(bookDTO);
                 return Ok(new { message = "ok" });
             }
-            catch (AuthorException ex)
+            catch (BookException ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
@@ -159,10 +160,10 @@ namespace API.Controllers
         {
             try
             {
-                await _authorService.DeleteAsync(id);
+                await _bookService.DeleteAsync(id);
                 return Ok(new { message = "ok" });
             }
-            catch (AuthorException ex)
+            catch (BookException ex)
             {
                 return BadRequest(new { message = ex.Message });
             }
