@@ -11,15 +11,13 @@ namespace Core.Services
     {
         #region Fields
         private readonly IPublisherRepository _publisherRepository;
-        private readonly IBookPublisherRepository _bookPublisherRepository;
         private readonly IMapper _mapper;
         #endregion
 
         #region Constructor
-        public PublisherService(IPublisherRepository publisherRepository, IBookPublisherRepository bookPublisherRepository, IMapper mapper)
+        public PublisherService(IPublisherRepository publisherRepository, IMapper mapper)
         {
             _publisherRepository = publisherRepository;
-            _bookPublisherRepository = bookPublisherRepository;
             _mapper = mapper;
         }
         #endregion
