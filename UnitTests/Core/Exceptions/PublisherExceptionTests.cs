@@ -1,45 +1,45 @@
 ﻿using Core.Exceptions;
 
-namespace UnitTests.Exceptions
+namespace UnitTests.Core.Exceptions
 {
     [TestClass]
-    public class BookExceptionTests
+    public class PublisherExceptionTests
     {
         [TestMethod]
-        public void BookException_Should_Have_DefaultConstructor()
+        public void PublisherException_Should_Have_DefaultConstructor()
         {
             // Act
-            var exception = new BookException();
+            var exception = new PublisherException();
 
             // Assert
             Assert.IsNotNull(exception);
             Assert.IsTrue(exception is Exception);
             Console.WriteLine($"Exception message: '{exception.Message}'");
-            Assert.AreEqual("Exception of type 'Core.Exceptions.BookException' was thrown.", exception.Message);
+            Assert.AreEqual("Exception of type 'Core.Exceptions.PublisherException' was thrown.", exception.Message);
         }
 
         [TestMethod]
-        public void BookException_Should_Set_Message_Correctly()
+        public void PublisherException_Should_Set_Message_Correctly()
         {
             // Arrange
-            var expectedMessage = "An error occurred in the Book module.";
+            var expectedMessage = "An error occurred in the Publisher module.";
 
             // Act
-            var exception = new BookException(expectedMessage);
+            var exception = new PublisherException(expectedMessage);
 
             // Assert
             Assert.AreEqual(expectedMessage, exception.Message);
         }
 
         [TestMethod]
-        public void BookException_Should_Set_Message_And_InnerException_Correctly()
+        public void PublisherException_Should_Set_Message_And_InnerException_Correctly()
         {
             // Arrange
-            var expectedMessage = "Book-related error.";
+            var expectedMessage = "Publisher-related error.";
             var innerException = new Exception("Inner exception message");
 
             // Act
-            var exception = new BookException(expectedMessage, innerException);
+            var exception = new PublisherException(expectedMessage, innerException);
 
             // Assert
             Assert.AreEqual(expectedMessage, exception.Message);

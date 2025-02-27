@@ -1,6 +1,6 @@
 ﻿using Core.Entities;
 
-namespace UnitTests.Entities
+namespace UnitTests.Core.Entities
 {
     [TestClass]
     public class PublisherTests
@@ -14,7 +14,7 @@ namespace UnitTests.Entities
             // Assert
             Assert.AreEqual(string.Empty, publisher.Name, "Name should be empty by default.");
             Assert.AreEqual(string.Empty, publisher.Country, "Country should be empty by default.");
-            Assert.AreEqual(default(int), publisher.FoundedYear, "FoundedYear should have a default value of 0.");
+            Assert.AreEqual(default, publisher.FoundedYear, "FoundedYear should have a default value of 0.");
             Assert.AreEqual(string.Empty, publisher.Website, "Website should be empty by default.");
             Assert.IsNotNull(publisher.BookPublishers, "BookPublishers collection should not be null.");
             Assert.AreEqual(0, publisher.BookPublishers.Count, "BookPublishers collection should be empty by default.");

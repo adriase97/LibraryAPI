@@ -2,7 +2,7 @@
 using Core.Enums;
 using Core.Specifications;
 
-namespace UnitTests.Specifications
+namespace UnitTests.Core.Specifications
 {
     [TestClass]
     public class BookSpecificationTests

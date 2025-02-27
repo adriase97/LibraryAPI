@@ -6,7 +6,7 @@ using Core.Interfaces;
 using Core.Services;
 using Moq;
 
-namespace UnitTests.Services
+namespace UnitTests.Core.Services
 {
     [TestClass]
     public class PublisherServiceTests
@@ -107,7 +107,7 @@ namespace UnitTests.Services
             var publisherDTO = new PublisherDTO
             {
                 Id = 1,
-                Name = "Penguin"                
+                Name = "Penguin"
             };
 
             var publisher = new Publisher { Id = 1, Name = "Penguin" };

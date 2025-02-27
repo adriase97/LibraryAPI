@@ -6,7 +6,7 @@ using Core.Interfaces;
 using Core.Services;
 using Moq;
 
-namespace UnitTests.Services
+namespace UnitTests.Core.Services
 {
     [TestClass]
     public class AuthorServiceTests

@@ -1,6 +1,6 @@
 ﻿using Core.Entities;
 
-namespace UnitTests.Entities
+namespace UnitTests.Core.Entities
 {
     [TestClass]
     public class AuthorTests
@@ -16,7 +16,7 @@ namespace UnitTests.Entities
             Assert.AreEqual(string.Empty, author.Name, "Name should be empty by default.");
             Assert.AreEqual(string.Empty, author.Nationality, "Nationality should be empty by default.");
             Assert.AreEqual(string.Empty, author.Biography, "Biography should be empty by default.");
-            Assert.AreEqual(default(DateTime), author.BirthDate, "BirthDate should have a default value.");
+            Assert.AreEqual(default, author.BirthDate, "BirthDate should have a default value.");
         }
 
         [TestMethod]

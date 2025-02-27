@@ -1,4 +1,4 @@
-﻿using Core.Validation;
+﻿using Core.Validations;
 using System.ComponentModel.DataAnnotations;
 
 namespace Core.DTOs

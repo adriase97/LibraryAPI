@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Core.Validation
+namespace Core.Validations
 {
     public class NotEqualAttribute : ValidationAttribute
     {

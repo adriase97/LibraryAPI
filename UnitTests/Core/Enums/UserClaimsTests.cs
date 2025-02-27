@@ -1,6 +1,6 @@
 ﻿using Core.Enums;
 
-namespace UnitTests.Enums
+namespace UnitTests.Core.Enums
 {
     [TestClass]
     public class UserClaimsTests

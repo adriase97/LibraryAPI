@@ -1,6 +1,6 @@
 ﻿using Core.Exceptions;
 
-namespace UnitTests.Exceptions
+namespace UnitTests.Core.Exceptions
 {
     [TestClass]
     public class BookPublisherExceptionTests

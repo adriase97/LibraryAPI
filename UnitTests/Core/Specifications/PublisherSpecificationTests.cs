@@ -1,7 +1,7 @@
 ﻿using Core.Entities;
 using Core.Specifications;
 
-namespace UnitTests.Specifications
+namespace UnitTests.Core.Specifications
 {
     [TestClass]
     public class PublisherSpecificationTests

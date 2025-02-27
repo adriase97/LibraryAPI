@@ -1,7 +1,7 @@
 ﻿using Core.Entities;
 using Core.Enums;
 
-namespace UnitTests.Entities
+namespace UnitTests.Core.Entities
 {
     [TestClass]
     public class BookTests
@@ -16,11 +16,11 @@ namespace UnitTests.Entities
             Assert.IsNotNull(book.BookPublishers, "BookPublishers collection should be initialized.");
             Assert.AreEqual(string.Empty, book.Title, "Title should be empty by default.");
             Assert.AreEqual(string.Empty, book.ISBN, "ISBN should be empty by default.");
-            Assert.AreEqual(default(int), book.PublicationYear, "PublicationYear should have a default value.");
-            Assert.AreEqual(default(int), book.Pages, "Pages should have a default value.");
-            Assert.AreEqual(default(Genre), book.Genre, "Genre should have a default value.");
-            Assert.AreEqual(default(decimal), book.Price, "Price should have a default value.");
-            Assert.AreEqual(default(int), book.AuthorId, "AuthorId should have a default value.");
+            Assert.AreEqual(default, book.PublicationYear, "PublicationYear should have a default value.");
+            Assert.AreEqual(default, book.Pages, "Pages should have a default value.");
+            Assert.AreEqual(default, book.Genre, "Genre should have a default value.");
+            Assert.AreEqual(default, book.Price, "Price should have a default value.");
+            Assert.AreEqual(default, book.AuthorId, "AuthorId should have a default value.");
             Assert.IsNull(book.Author, "Author should be null by default.");
         }
 

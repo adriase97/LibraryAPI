@@ -6,7 +6,7 @@ using Moq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
-namespace UnitTests.Services
+namespace UnitTests.Core.Services
 {
     [TestClass]
     public class TokenServiceTests

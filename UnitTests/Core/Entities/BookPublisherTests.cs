@@ -1,6 +1,6 @@
 ﻿using Core.Entities;
 
-namespace UnitTests.Entities
+namespace UnitTests.Core.Entities
 {
     [TestClass]
     public class BookPublisherTests
@@ -12,9 +12,9 @@ namespace UnitTests.Entities
             var bookPublisher = new BookPublisher();
 
             // Assert
-            Assert.AreEqual(default(int), bookPublisher.BookId, "BookId should have a default value.");
-            Assert.AreEqual(default(int), bookPublisher.PublisherId, "PublisherId should have a default value.");
-            Assert.AreEqual(default(DateTime), bookPublisher.PublishedDate, "PublishedDate should have a default value.");
+            Assert.AreEqual(default, bookPublisher.BookId, "BookId should have a default value.");
+            Assert.AreEqual(default, bookPublisher.PublisherId, "PublisherId should have a default value.");
+            Assert.AreEqual(default, bookPublisher.PublishedDate, "PublishedDate should have a default value.");
             Assert.IsNull(bookPublisher.Book, "Book should be null by default.");
             Assert.IsNull(bookPublisher.Publisher, "Publisher should be null by default.");
         }
