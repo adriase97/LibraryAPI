@@ -9,7 +9,7 @@ namespace Core.DTOs
         public string CurrentPassword { get; set; } = string.Empty;
 
         [Required]
-        [NotEqual("CurrentPassword")]
+        [NotEqual(nameof(CurrentPassword))]
         public string NewPassword { get; set; } = string.Empty;
     }
 }
