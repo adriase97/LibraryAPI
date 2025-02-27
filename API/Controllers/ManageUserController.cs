@@ -32,7 +32,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound("User not found");
 
                 var roles = await _userManager.GetRolesAsync(user);
@@ -49,7 +49,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound("User not found");
 
                 var claims = await _userManager.GetClaimsAsync(user);
@@ -69,7 +69,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound("User not found");
 
                 if (!await _roleManager.RoleExistsAsync(role))
@@ -92,7 +92,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound("User not found");
 
                 var invalidRoles = roles.Where(role => !_roleManager.RoleExistsAsync(role).Result).ToList();
@@ -116,7 +116,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound(new { message = "User not found" });
 
                 
@@ -145,7 +145,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound(new { message = "User not found" });
 
                 var existingClaims = await _userManager.GetClaimsAsync(user);
@@ -178,7 +178,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound(new { message = "User not found" });
 
                 var oldClaim = new Claim(replaceClaimDto.OldType, replaceClaimDto.OldValue);
@@ -204,7 +204,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound(new { message = "User not found" });
 
                 // Verificar si el rol existe
@@ -232,7 +232,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound(new { message = "User not found" });
 
                 // Obtener los roles existentes para el usuario
@@ -265,7 +265,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound(new { message = "User not found" });
 
                 var claim = new Claim(claimDto.Type, claimDto.Value);
@@ -287,7 +287,7 @@ namespace API.Controllers
         {
             try
             {
-                var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
                 if (user == null) return NotFound(new { message = "User not found" });
 
                 var claims = claimsDto.Select(c => new Claim(c.Type, c.Value)).ToList();

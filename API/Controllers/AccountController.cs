@@ -38,11 +38,11 @@ namespace API.Controllers
         [HttpGet("Profile")]
         public async Task<IActionResult> GetProfileAsync()
         {
-            var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
             if (user == null)
                 return NotFound("User not found");
 
-            return Ok(new { message = "ok", response = new { user.Id, user.Email } });
+            return Ok(new { message = "ok", response = new { user.Id, user.Email, user.UserName } });
         }
         #endregion
 
@@ -83,7 +83,7 @@ namespace API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
             if (user == null)
                 return NotFound("User not found");
 
@@ -101,7 +101,7 @@ namespace API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
-            var user = await _userManager.FindByNameAsync(User.Identity?.Name);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
             if (user == null) return NotFound("User not found");
 
             var result = await _userManager.ChangePasswordAsync(user, changePasswordUserDto.CurrentPassword, changePasswordUserDto.NewPassword);

@@ -187,3 +187,4 @@ C:\Users\adria\OneDrive\Escritorio\Git\LibraryAPI\API\bin\Debug\net8.0\Infrastru
 C:\Users\adria\OneDrive\Escritorio\Git\LibraryAPI\API\bin\Debug\net8.0\Core.pdb
 C:\Users\adria\OneDrive\Escritorio\Git\LibraryAPI\API\bin\Debug\net8.0\Infrastructure.pdb
 C:\Users\adria\OneDrive\Escritorio\Git\LibraryAPI\API\obj\Debug\net8.0\API.sourcelink.json
+C:\Users\adria\OneDrive\Escritorio\Git\LibraryAPI\API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

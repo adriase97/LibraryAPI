@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Core.Services
 {
@@ -41,7 +42,8 @@ namespace Core.Services
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.Id),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()) // Unique token ID
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()), // Unique token ID
+                new Claim(ClaimTypes.Name, user.UserName)
             };
 
             // Add roles as claims
@@ -55,10 +57,11 @@ namespace Core.Services
 
             var key = new SymmetricSecurityKey(secretKey);
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var claimsIdentity = new ClaimsIdentity(tokenClaims, JwtBearerDefaults.AuthenticationScheme, ClaimTypes.Name, ClaimTypes.Role);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(tokenClaims),
+                Subject = claimsIdentity,
                 Expires = DateTime.UtcNow.AddMinutes(expireMinutes),
                 Issuer = issuer,
                 Audience = audience,
